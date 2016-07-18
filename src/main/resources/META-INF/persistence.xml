@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+
+    <persistence-unit name="persistenceUnit" >
+        <non-jta-data-source>java:comp/env/jdbc/billeterie</non-jta-data-source>
+        <properties>
+
+            <!--<property name="openjpa.jdbc.SynchronizeMappings"
+                      value="buildSchema(SchemaAction=refresh,ForeignKeys=true)"/>-->
+            <property name="openjpa.jdbc.Schemas" value="db3"/>
+
+        </properties>
+    </persistence-unit>
+</persistence>
