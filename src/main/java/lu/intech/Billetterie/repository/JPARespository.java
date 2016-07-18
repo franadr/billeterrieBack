@@ -53,5 +53,15 @@ public class JPARespository implements Repository {
         return vendeurs;
     }
 
+    @Override
+    public List<VORtEntity> getAllDisponibility() {
+        TypedQuery<VORtEntity> query = em.createQuery("Select v from VORtEntity v ",VORtEntity.class);
+
+        List<VORtEntity> disp =query.getResultList();
+
+
+        return disp;
+    }
+
 
 }

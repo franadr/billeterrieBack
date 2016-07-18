@@ -9,7 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="dispVendeur")
 public class DispoVendeur {
 
-
+    private int idVendeur;
+    private int idOffre;
     private String Nom;
     private String Prenom;
     private String Location;
@@ -45,5 +46,17 @@ public class DispoVendeur {
 
     public void setQuantite(int quantite) {
         Quantite = quantite;
+    }
+
+    public int getIdVendeur() { return idVendeur; }
+
+    public void setIdVendeur(int idVendeur) {this.idVendeur = idVendeur;}
+
+    public int getIdOffre() {
+        return idOffre;
+    }
+
+    public void setIdOffre(int idOffre) {
+        this.idOffre = idOffre;
     }
 }

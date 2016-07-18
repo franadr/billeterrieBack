@@ -9,6 +9,7 @@ public class Vendeurs {
     private String nom;
     private String prenom;
     private String location;
+    private int solde;
 
     public int getIdVendeur() {
         return idVendeur;
@@ -40,5 +41,13 @@ public class Vendeurs {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public int getSolde() {
+        return solde;
+    }
+
+    public void setSolde(int solde) {
+        this.solde = solde;
     }
 }

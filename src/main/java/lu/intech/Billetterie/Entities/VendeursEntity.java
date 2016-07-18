@@ -12,6 +12,7 @@ public class VendeursEntity {
     private String nom;
     private String prenom;
     private String location;
+    private int solde;
 
 
     @Id
@@ -54,6 +55,17 @@ public class VendeursEntity {
         this.location = location;
     }
 
+    @Basic
+    @Column(name = "Solde",nullable = true)
+    public int getSolde() {
+        return solde;
+    }
+
+    public void setSolde(int solde) {
+        this.solde = solde;
+    }
+
+
 
 
     @Override
@@ -79,5 +91,6 @@ public class VendeursEntity {
         result = 31 * result + (location != null ? location.hashCode() : 0);
         return result;
     }
+
 
 }

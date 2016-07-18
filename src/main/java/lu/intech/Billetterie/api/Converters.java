@@ -33,6 +33,9 @@ public class Converters {
         disp.setLocation(e.getVendeur().getLocation());
         disp.setPrenom(e.getVendeur().getPrenom());
         disp.setQuantite(e.getQuantite());
+        disp.setIdOffre(e.getOffre().getIdOffre());
+        disp.setIdVendeur(e.getVendeur().getIdVendeur());
+
 
         return disp;
     }

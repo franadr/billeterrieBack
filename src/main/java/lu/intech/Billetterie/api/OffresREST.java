@@ -77,6 +77,16 @@ public class OffresREST {
         return Response.ok(list).build();
 
     }
+    @Path("/allDisp")
+    @GET
+    public Response getAllDisp(){
+        List  <VORtEntity> disp = repository.getAllDisponibility();
+        List <DispoVendeur> disps = disp.stream().map(Converters::VORtoEntity).collect(Collectors.toList());
+
+
+        GenericEntity<List<DispoVendeur>> list = new GenericEntity<List<DispoVendeur>>(disps) {};
+        return Response.ok(list).build();
+    }
 
 
 }
