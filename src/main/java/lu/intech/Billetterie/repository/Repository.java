@@ -17,5 +17,6 @@ public interface Repository {
     void postOffer(OffreEntity o);
     List<VendeursEntity> getAllVendeurs();
     List<VORtEntity> getAllDisponibility();
+    void modifDisp(int idOffre,int idVendeur, int quantite);
 
 }

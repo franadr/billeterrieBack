@@ -88,5 +88,15 @@ public class OffresREST {
         return Response.ok(list).build();
     }
 
+    @Path("/modifDisp")
+    @POST
+    public Response modifDisp(DispoVendeur d){
+        int idOffre,idVendeur,quantite;
+        idOffre = d.getIdOffre();
+        idVendeur = d.getIdVendeur();
+        quantite = d.getQuantite();
+        repository.modifDisp(idOffre,idVendeur,quantite);
+        return Response.ok().build();
+    }
 
 }

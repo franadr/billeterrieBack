@@ -63,5 +63,14 @@ public class JPARespository implements Repository {
         return disp;
     }
 
+    @Override
+    public void modifDisp(int idOffre, int idVendeur, int quantite) {
+        Query query = em.createQuery("UPDATE VORtEntity v set v.quantite = :quantite where v.offre.idOffre=:idOffre and v.vendeur.idVendeur=:idVendeur");
+        query.setParameter("quantite",quantite);
+        query.setParameter("idOffre",idOffre);
+        query.setParameter("idVendeur",idVendeur);
+        query.executeUpdate();
+    }
+
 
 }
