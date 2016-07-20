@@ -72,5 +72,21 @@ public class JPARespository implements Repository {
         query.executeUpdate();
     }
 
+    @Override
+    public void modifOffre(OffreEntity o) {
+    Query query = em.createQuery("UPDATE OffreEntity v set v.commande = :commande, v.imgUrl=:imgurl, v.link=:link, v.prixCfl=:prixCfl, v.prixPublic=:prixPublic where v.idOffre=:idOffre");
+        query.setParameter("commande",o.getCommande());
+        query.setParameter("imgurl",o.getImgUrl());
+        query.setParameter("link",o.getLink());
+        query.setParameter("prixCfl",o.getPrixCfl());
+        query.setParameter("prixPublic",o.getPrixPublic());
+        query.setParameter("idOffre",o.getIdOffre());
+
+        query.executeUpdate();
+        System.out.println("modifOffre executed");
+
+
+    }
+
 
 }

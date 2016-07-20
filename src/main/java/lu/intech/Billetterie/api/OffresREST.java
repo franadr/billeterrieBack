@@ -32,8 +32,7 @@ public class OffresREST {
 
 
 
-        return Response.ok(list
-                , MediaType.APPLICATION_JSON_TYPE).build();
+        return Response.ok(list, MediaType.APPLICATION_JSON_TYPE).build();
     }
 
     @POST
@@ -77,6 +76,8 @@ public class OffresREST {
         return Response.ok(list).build();
 
     }
+
+    //not used
     @Path("/allDisp")
     @GET
     public Response getAllDisp(){
@@ -96,6 +97,24 @@ public class OffresREST {
         idVendeur = d.getIdVendeur();
         quantite = d.getQuantite();
         repository.modifDisp(idOffre,idVendeur,quantite);
+        return Response.ok().build();
+    }
+
+    @Path("/editOffre")
+    @POST
+    public Response editOffre(Offre e){
+        OffreEntity ofr = new OffreEntity();
+        ofr.setIdOffre(e.getIdOffre());
+        ofr.setCommande(e.getCommande());
+        ofr.setLink(e.getLink());
+        ofr.setPrixCfl(e.getPrixCfl());
+        ofr.setPrixPublic(e.getPrixPublic());
+        ofr.setTitre(e.getTitre());
+        ofr.setImgUrl(e.getImgUrl());
+        ofr.setDescription(e.getDescription());
+
+        repository.modifOffre(ofr);
+
         return Response.ok().build();
     }
 
