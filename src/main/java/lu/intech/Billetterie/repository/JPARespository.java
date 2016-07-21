@@ -74,18 +74,31 @@ public class JPARespository implements Repository {
 
     @Override
     public void modifOffre(OffreEntity o) {
-    Query query = em.createQuery("UPDATE OffreEntity v set v.commande = :commande, v.imgUrl=:imgurl, v.link=:link, v.prixCfl=:prixCfl, v.prixPublic=:prixPublic where v.idOffre=:idOffre");
+    Query query = em.createQuery("UPDATE OffreEntity v set v.commande = :commande, v.imgUrl=:imgurl, v.link=:link, v.prixCfl=:prixCfl, v.prixPublic=:prixPublic, v.titre=:titre where v.idOffre=:idOffre");
         query.setParameter("commande",o.getCommande());
         query.setParameter("imgurl",o.getImgUrl());
         query.setParameter("link",o.getLink());
         query.setParameter("prixCfl",o.getPrixCfl());
         query.setParameter("prixPublic",o.getPrixPublic());
         query.setParameter("idOffre",o.getIdOffre());
+        query.setParameter("titre",o.getTitre());
 
         query.executeUpdate();
         System.out.println("modifOffre executed");
 
 
+    }
+
+    @Override
+    public void delOffre(int idOffre) {
+
+
+        Query query = em.createQuery("delete from VORtEntity v where v.offre.idOffre = :idOffre");
+        query.setParameter("idOffre",idOffre);
+        Query query1=em.createQuery("delete from OffreEntity o where o.idOffre = :idOffre");
+        query1.setParameter("idOffre",idOffre);
+        query.executeUpdate();
+        query1.executeUpdate();
     }
 
 

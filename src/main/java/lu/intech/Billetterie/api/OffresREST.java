@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 @Path("/offres")
 @Produces("application/json")
 public class OffresREST {
+    Message message = new Message();
+
     @Inject
     Repository repository;
 
@@ -63,6 +65,14 @@ public class OffresREST {
         GenericEntity<List<DispoVendeur>> list = new GenericEntity<List<DispoVendeur>>(disps) {};
         return Response.ok(list).build();
     }
+    @Path("/{id}")
+    @DELETE
+    public Response delOffer(@PathParam("id") int idoffre){
+            repository.delOffre(idoffre);
+
+        this.message.setMessage("Offre supprimé");
+        return Response.ok(message).build();
+    }
 
     @Path("/vendeurs")
     @GET
@@ -97,7 +107,8 @@ public class OffresREST {
         idVendeur = d.getIdVendeur();
         quantite = d.getQuantite();
         repository.modifDisp(idOffre,idVendeur,quantite);
-        return Response.ok().build();
+        this.message.setMessage("Offre modifié");
+        return Response.ok(message).build();
     }
 
     @Path("/editOffre")
@@ -115,7 +126,7 @@ public class OffresREST {
 
         repository.modifOffre(ofr);
 
-        return Response.ok().build();
+        return Response.ok("Offre modifié").build();
     }
 
 }

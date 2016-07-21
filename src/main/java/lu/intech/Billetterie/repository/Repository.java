@@ -19,5 +19,6 @@ public interface Repository {
     List<VORtEntity> getAllDisponibility();
     void modifDisp(int idOffre,int idVendeur, int quantite);
     void modifOffre(OffreEntity o);
+    void delOffre(int idOffre);
 
 }
