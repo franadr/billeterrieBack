@@ -1,5 +1,6 @@
 package lu.intech.Billetterie.api;
 
+import lu.intech.Billetterie.Entities.LogEntity;
 import lu.intech.Billetterie.Entities.OffreEntity;
 import lu.intech.Billetterie.Entities.VORtEntity;
 import lu.intech.Billetterie.Entities.VendeursEntity;
@@ -127,6 +128,23 @@ public class OffresREST {
         repository.modifOffre(ofr);
 
         return Response.ok("Offre modifié").build();
+    }
+
+    @Path ("/vente")
+    @POST
+    public Response vente(Vente v){
+        repository.executeVente(v);
+        return Response.ok("Vente enregistré").build();
+    }
+
+    @Path ("/historique")
+    @GET
+    public Response listHistorique(){
+            List<LogEntity> historique =  repository.getHistorique();
+            List<Log> list = historique.stream().map(Converters::logToEntity).collect(Collectors.toList());
+
+        GenericEntity<List<Log>> hist = new GenericEntity<List<Log>>(list) {};
+        return Response.ok(hist).build();
     }
 
 }

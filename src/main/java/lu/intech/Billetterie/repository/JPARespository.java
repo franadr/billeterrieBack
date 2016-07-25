@@ -3,13 +3,19 @@ package lu.intech.Billetterie.repository;
 
 
 
+import lu.intech.Billetterie.Entities.LogEntity;
 import lu.intech.Billetterie.Entities.OffreEntity;
 import lu.intech.Billetterie.Entities.VORtEntity;
 import lu.intech.Billetterie.Entities.VendeursEntity;
+import lu.intech.Billetterie.api.Vente;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Adriano on 11/07/16.
@@ -37,6 +43,20 @@ public class JPARespository implements Repository {
 
         return disp;
     }
+
+    @Override
+    public List<Pair<VendeursEntity,VORtEntity>> getDisponibility2(int idOffre ) {
+        Query query = em.createQuery("Select e,v from VendeursEntity e left join VORtEntity v where v.offre.idOffre = :idOffre");
+        query.setParameter("idOffre",idOffre);
+
+        List<Object[]> disp = query.getResultList();
+
+        return disp.stream().map( objects -> new ImmutablePair<>( (VendeursEntity)objects[0], (VORtEntity)objects[1]))
+                .collect(Collectors.toList());
+
+    }
+
+
 
     @Override
     public void postOffer(OffreEntity o)  {
@@ -101,5 +121,34 @@ public class JPARespository implements Repository {
         query1.executeUpdate();
     }
 
+    @Override
+    public void executeVente(Vente v) {
+        LogEntity l = new LogEntity();
+        Date currentdate = new Date();
+        Query query =em.createQuery("UPDATE VORtEntity v set v.quantite = v.quantite - :quantite where v.offre.idOffre=:idOffre and v.vendeur.idVendeur=:idVendeur");
+        query.setParameter("quantite",v.getQuantite());
+        query.setParameter("idOffre",v.getOffre().getIdOffre());
+        query.setParameter("idVendeur",v.getVendeur().getIdVendeur());
+        query.executeUpdate();
+
+        Query query2 = em.createQuery("UPDATE VendeursEntity v set v.solde=v.solde + :solde where v.idVendeur=:idVendeur");
+        int solde = v.getQuantite()*v.getPrixCfl();
+        query2.setParameter("solde",solde);
+        query2.setParameter("idVendeur",v.getVendeur().getIdVendeur());
+        query2.executeUpdate();
+
+        l.setDate(currentdate);
+        l.setOperation(v.getTrigramme()+ " a acheté "+v.getQuantite()+" "+v.getOffre().getTitre()+" à "+v.getVendeur().getPrenom()+" "+v.getVendeur().getNom()+" ("+v.getVendeur().getLocation()+")");
+
+        em.persist(l);
+    }
+
+    @Override
+    public List<LogEntity> getHistorique() {
+        TypedQuery<LogEntity> query = em.createQuery("SELECT h from LogEntity h",LogEntity.class);
+        List<LogEntity> historique= query.getResultList();
+
+        return historique;
+    }
 
 }

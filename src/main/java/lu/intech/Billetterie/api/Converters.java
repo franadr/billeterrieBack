@@ -1,9 +1,12 @@
 package lu.intech.Billetterie.api;
 
 
+import lu.intech.Billetterie.Entities.LogEntity;
 import lu.intech.Billetterie.Entities.OffreEntity;
 import lu.intech.Billetterie.Entities.VORtEntity;
 import lu.intech.Billetterie.Entities.VendeursEntity;
+
+import java.text.SimpleDateFormat;
 
 
 /**
@@ -48,6 +51,16 @@ public class Converters {
         v.setPrenom(e.getPrenom());
 
         return v;
+    }
+
+    public static Log logToEntity(LogEntity h){
+        Log l = new Log();
+        l.setOperation(h.getOperation());
+        SimpleDateFormat ft = new SimpleDateFormat();
+        l.setDate(ft.format(h.getDate()));
+
+        return l;
+
     }
 
 
